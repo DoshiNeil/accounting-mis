@@ -19,6 +19,8 @@ function onOpen(
     | GoogleAppsScript.Events.FormsOnOpen,
 ): void {
   console.log(e);
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu("Transactions formatting").addItem("IDBI ACC", "formatIDBIAccTransactions").addToUi();
 }
 
 function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit): void {
@@ -37,4 +39,7 @@ function doPost(e: GoogleAppsScript.Events.DoPost): void {
   console.log(e);
 }
 
-export { onOpen, onEdit, onInstall, doGet, doPost };
+function formatIDBIAccTransactions() {
+  SpreadsheetApp.getUi().alert("You clicked IDBI ACC!, and this edit is from local ide");
+}
+export { onOpen, onEdit, onInstall, doGet, doPost, formatIDBIAccTransactions };

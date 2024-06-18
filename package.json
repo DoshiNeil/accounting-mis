@@ -5,7 +5,8 @@
     "deploy": "npm run push && clasp deploy",
     "lint": "eslint",
     "format": "prettier . --write",
-    "login": "clasp login"
+    "login": "clasp login",
+    "pull":"clasp pull"
   },
   "license": "GPL",
   "dependencies": {},
