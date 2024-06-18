@@ -1,6 +1,7 @@
 // You can access any of the global GAS objects in this file. You can also
 // import local files or external dependencies:
 export { helloWorld } from "./example";
+export  { promptForAccountNumber } from "./functions/formatIDBIBankACC";
 
 // Simple Triggers: These five export functions are reserved export function names that are
 // called by Google Apps when the corresponding event occurs. You can safely
@@ -11,16 +12,11 @@ export { helloWorld } from "./example";
 // NOTE: only `export {...}` syntax will work. You cannot define and export a trigger in
 // the same line.
 
-function onOpen(
-  e:
-    | GoogleAppsScript.Events.DocsOnOpen
-    | GoogleAppsScript.Events.SlidesOnOpen
-    | GoogleAppsScript.Events.SheetsOnOpen
-    | GoogleAppsScript.Events.FormsOnOpen,
-): void {
-  console.log(e);
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu("Transactions formatting").addItem("IDBI ACC", "formatIDBIAccTransactions").addToUi();
+function onOpen(): void {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Accounting MIS')
+    .addItem('Format IDBI Acc', 'promptForAccountNumber')
+    .addToUi();
 }
 
 function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit): void {
@@ -39,7 +35,5 @@ function doPost(e: GoogleAppsScript.Events.DoPost): void {
   console.log(e);
 }
 
-function formatIDBIAccTransactions() {
-  SpreadsheetApp.getUi().alert("You clicked IDBI ACC!, and this edit is from local ide");
-}
-export { onOpen, onEdit, onInstall, doGet, doPost, formatIDBIAccTransactions };
+
+export { onOpen, onEdit, onInstall, doGet, doPost  };
