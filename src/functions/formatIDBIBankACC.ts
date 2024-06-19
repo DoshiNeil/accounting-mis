@@ -1,6 +1,6 @@
 import { constants } from "../util/contants";
 
-export function promptForAccountNumber(): void {
+export function promptForIDBIAccountNumber(): void {
   const ui = SpreadsheetApp.getUi();
   const response = ui.prompt("Account Number", "Enter last 4 digits of the Acc", ui.ButtonSet.OK_CANCEL);
 
