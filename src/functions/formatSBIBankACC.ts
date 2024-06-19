@@ -1,5 +1,7 @@
 //import { constants } from "../util/contants";
 
+import { constants } from "../util/contants";
+
 export function promptForSBIAccountNumber(): void {
   const ui = SpreadsheetApp.getUi();
   const accNumberField = ui.prompt(
@@ -53,7 +55,7 @@ export function formatSBIBankAcc(sheetName: string, firstTrxRow: string): void {
   const transformedValues = values.map((r, idx) => {
     const txnStr = r.reduce((str, v) => str + "\t" + v, "");
     const row = txnStr.trim().split("\t");
-    return [idx, row[0], row[2], row[3], row[5], row[4], !!row[4] ? row[4] : row[5], sheetName];
+    return [idx+1, row[0], row[2], row[3], row[5], row[4], !!row[4] ? row[4] : row[5], sheetName];
   });
 
   // Set the headers to the new sheet
@@ -65,12 +67,12 @@ export function formatSBIBankAcc(sheetName: string, firstTrxRow: string): void {
     .setValues(transformedValues);
 
   // Set the number format for the amount column to Indian Rupee format
-  //destinationSheet.getRange(2, 7, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
-  //destinationSheet.getRange(2, 5, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
-  //destinationSheet.getRange(2, 6, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
-  //
+  destinationSheet.getRange(2, 7, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
+  destinationSheet.getRange(2, 5, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
+  destinationSheet.getRange(2, 6, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
+
   // Set date format for the txn date
-  //destinationSheet.getRange(2, 2, transformedValues.length, 1).setNumberFormat(constants.dateFormat);
+  destinationSheet.getRange(2, 2, transformedValues.length, 1).setNumberFormat(constants.dateFormat);
 
   // Auto-resize columns to fit content
   for (let i = 1; i <= headers.length; i++) {
