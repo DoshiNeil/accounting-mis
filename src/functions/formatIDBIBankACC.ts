@@ -32,7 +32,7 @@ export function formatIDBIBankAcc(sheetName: string): void {
   const values = range.getValues();
 
   // Define headers for the new sheet
-  const headers = ["Sr No.", "Txn Date", "Description", "Cheque no", "CR", "DR", "Amount"];
+  const headers = ["Sr No.", "Txn Date", "Description", "Cheque no", "CR", "DR", "Amount", "Bank Acc"];
 
   // Format the headers
   const headerRange = destinationSheet.getRange(1, 1, 1, headers.length);
@@ -42,7 +42,7 @@ export function formatIDBIBankAcc(sheetName: string): void {
   const transformedValues = values.map((row) => {
     const cr = row[5] === "Cr." ? row[7] : ""; // Amount in CR column if 'CR'
     const dr = row[5] === "Dr." ? row[7] : ""; // Amount in DR column if 'DR'
-    //const formattedDate = formatDate(row[1]); // Format txn date
+
     return [
       row[0],
       row[2],
@@ -51,6 +51,7 @@ export function formatIDBIBankAcc(sheetName: string): void {
       cr !== "" ? parseFloat(cr.replace(/,/g, "")) : cr,
       dr !== "" ? parseFloat(dr.replace(/,/g, "")) : dr,
       parseFloat(row[7].replace(/,/g, "")),
+      sheetName
     ]; // Selected and transformed columns
   });
 
