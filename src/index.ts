@@ -1,6 +1,5 @@
 // You can access any of the global GAS objects in this file. You can also
 // import local files or external dependencies:
-export { helloWorld } from "./example";
 export  { promptForAccountNumber } from "./functions/formatIDBIBankACC";
 
 // Simple Triggers: These five export functions are reserved export function names that are
@@ -34,6 +33,5 @@ function doGet(e: GoogleAppsScript.Events.DoGet): void {
 function doPost(e: GoogleAppsScript.Events.DoPost): void {
   console.log(e);
 }
-
 
 export { onOpen, onEdit, onInstall, doGet, doPost  };
