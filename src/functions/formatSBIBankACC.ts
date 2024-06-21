@@ -1,5 +1,3 @@
-//import { constants } from "../util/contants";
-
 import { constants } from "../util/contants";
 
 export function promptForSBIAccountNumber(): void {
@@ -44,11 +42,8 @@ export function formatSBIBankAcc(sheetName: string, firstTrxRow: string): void {
   // Get the values from the source range
   const values = range.getValues();
 
-  // Define headers for the new sheet
-  const headers = ["Sr No.", "Txn Date", "Description", "Cheque no", "CR", "DR", "Amount", "Bank Acc"];
-
-  // Format the headers
-  const headerRange = destinationSheet.getRange(1, 1, 1, headers.length);
+  // Format the constants.headers
+  const headerRange = destinationSheet.getRange(1, 1, 1, constants.headers.length);
   headerRange.setFontWeight("bold").setBackground("#cccccc").setHorizontalAlignment("center");
 
   // Transform the data to remove unwanted columns, split cd/dr, format date, and format amount
@@ -58,8 +53,8 @@ export function formatSBIBankAcc(sheetName: string, firstTrxRow: string): void {
     return [idx+1,formatDate(row[0]), row[2], row[3], row[5], row[4], !!row[4] ? row[4] : row[5], sheetName];
   });
 
-  // Set the headers to the new sheet
-  destinationSheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  // Set the constants.headers to the new sheet
+  destinationSheet.getRange(1, 1, 1, constants.headers.length).setValues([constants.headers]);
 
   // Set the transformed data to the new sheet
   destinationSheet
@@ -73,7 +68,7 @@ export function formatSBIBankAcc(sheetName: string, firstTrxRow: string): void {
 
 
   // Auto-resize columns to fit content
-  for (let i = 1; i <= headers.length; i++) {
+  for (let i = 1; i <= constants.headers.length; i++) {
     destinationSheet.autoResizeColumn(i);
   }
 }

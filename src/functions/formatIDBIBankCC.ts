@@ -1,17 +1,19 @@
 import { constants } from "../util/contants";
-
-export function promptForIDBIAccountNumber(): void {
+export function promptForIDBICCNumber(): void {
   const ui = SpreadsheetApp.getUi();
-  const response = ui.prompt("Account Number", "Enter last 4 digits of the Acc", ui.ButtonSet.OK_CANCEL);
+  const accNumberField = ui.prompt(
+    "Account Number",
+    "Enter last 4 digits of the CC",
+    ui.ButtonSet.OK_CANCEL,
+  );
 
-  // Process the user's response.
-  if (response.getSelectedButton() == ui.Button.OK) {
-    const sheetName = ` IDBI${response.getResponseText()}`;
-    formatIDBIBankAcc(sheetName);
+  // Process the user's accNumberField.
+  if (accNumberField.getSelectedButton() == ui.Button.OK) {
+      formatIDBIBankCC(`IDBICC${accNumberField.getResponseText()}`);
   }
 }
 
-export function formatIDBIBankAcc(sheetName: string): void {
+export function formatIDBIBankCC(sheetName: string): void {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sourceSheet = ss.getActiveSheet();
   let destinationSheet = ss.getSheetByName(sheetName);
@@ -26,33 +28,21 @@ export function formatIDBIBankAcc(sheetName: string): void {
 
   // Define the range for the table: C6 to L (last row with data)
   const lastRow = sourceSheet.getLastRow();
-  const range = sourceSheet.getRange(7, 3, lastRow - 5, 10); // (startRow, startColumn, numRows, numColumns)
+  const range = sourceSheet.getRange(2, 1, lastRow, 5); // (startRow, startColumn, numRows, numColumns)
 
   // Get the values from the source range
   const values = range.getValues();
 
-    // Format the headers
+  // Format the constants.headers
   const headerRange = destinationSheet.getRange(1, 1, 1, constants.headers.length);
   headerRange.setFontWeight("bold").setBackground("#cccccc").setHorizontalAlignment("center");
 
   // Transform the data to remove unwanted columns, split cd/dr, format date, and format amount
-  const transformedValues = values.map((row) => {
-    const cr = row[5] === "Cr." ? row[7] : ""; // Amount in CR column if 'CR'
-    const dr = row[5] === "Dr." ? row[7] : ""; // Amount in DR column if 'DR'
-
-    return [
-      row[0],
-      row[2],
-      row[3],
-      row[4],
-      cr !== "" ? parseFloat(cr.replace(/,/g, "")) : cr,
-      dr !== "" ? parseFloat(dr.replace(/,/g, "")) : dr,
-      parseFloat(row[7].replace(/,/g, "")),
-      sheetName
-    ]; // Selected and transformed columns
+  const transformedValues = values.map((row, idx) => {
+    return [idx+1,row[0], row[1],'',row[3], row[2], row[4], sheetName];
   });
 
-  // Set the headers to the new sheet
+  // Set the constants.headers to the new sheet
   destinationSheet.getRange(1, 1, 1, constants.headers.length).setValues([constants.headers]);
 
   // Set the transformed data to the new sheet
@@ -65,8 +55,6 @@ export function formatIDBIBankAcc(sheetName: string): void {
   destinationSheet.getRange(2, 5, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
   destinationSheet.getRange(2, 6, transformedValues.length, 1).setNumberFormat(constants.currencyFormat);
 
-  // Set date format for the txn date
-  destinationSheet.getRange(2, 2, transformedValues.length, 1).setNumberFormat(constants.dateFormat);
 
   // Auto-resize columns to fit content
   for (let i = 1; i <= constants.headers.length; i++) {
