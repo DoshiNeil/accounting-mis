@@ -1,9 +1,12 @@
 // You can access any of the global GAS objects in this file. You can also
+
+
 // import local files or external dependencies:
 export { promptForSBIAccountNumber } from "./functions/formatSBIBankACC";
 export { promptForIDBIAccountNumber } from "./functions/formatIDBIBankACC";
 export { promptForIDBICCNumber } from "./functions/formatIDBIBankCC";
 export { promptForSBICCNumber } from "./functions/formatSBIBankCC";
+export { combineAllTransactions } from "./functions/combineAllTransactions";
 
 // called by Google Apps when the corresponding event occurs. You can safely
 // delete them if you won't be using them, but don't use the same export function names
@@ -20,6 +23,7 @@ function onOpen(): void {
     .addItem("Format SBI Acc", "promptForSBIAccountNumber")
     .addItem("Format IDBI CC", "promptForIDBICCNumber")
     .addItem("Format SBI CC", "promptForSBICCNumber")
+    .addItem("Combine all transactions", "combineAllTransactions")
     .addToUi();
 }
 
