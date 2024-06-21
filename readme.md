@@ -11,8 +11,8 @@ This app script is being designed for internal purposes of Nzym Technologies.
 [x] Write a base script to copy the transaction data from the raw sheet to a new sheet
 [x] Format the idbi bank acc statement
 [x] Format the sbi bank acc statement
-[ ] Format the sbi cc acc statement
-[ ] Format the idbi cc acc statement
+[x] Format the sbi cc acc statement
+[x] Format the idbi cc acc statement
 [ ] Design a function to combine all the formatted data into a single sheet and order then by Txn date
 
  #### V1 (Rule Engine - design a system to auto classify the transaction bases a rule engine)
